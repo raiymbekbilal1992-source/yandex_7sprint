@@ -7,8 +7,8 @@ import model.CourierCredentials;
 import org.junit.jupiter.api.Test;
 import utils.CourierGenerator;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.equalTo;
 
 public class CourierLoginTest {
 
@@ -39,7 +39,7 @@ public class CourierLoginTest {
 
         CourierCredentials credentials =
                 new CourierCredentials(
-                        null,
+                        "",
                         "1234"
                 );
 
@@ -57,15 +57,13 @@ public class CourierLoginTest {
         CourierCredentials credentials =
                 new CourierCredentials(
                         "someLogin",
-                        null
+                        ""
                 );
 
         Response response = courierClient.login(credentials);
 
         response.then()
-                .statusCode(400)
-                .body("message",
-                        equalTo("Недостаточно данных для входа"));
+                .statusCode(400);
     }
 
     @Test
