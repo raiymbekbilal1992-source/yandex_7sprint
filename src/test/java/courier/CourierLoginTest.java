@@ -4,20 +4,42 @@ import client.CourierClient;
 import io.restassured.response.Response;
 import model.Courier;
 import model.CourierCredentials;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import utils.CourierGenerator;
 
-import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class CourierLoginTest {
 
     private final CourierClient courierClient = new CourierClient();
 
+    private Courier courier;
+
+    @AfterEach
+    void tearDown() {
+
+        if (courier != null) {
+            try {
+                int courierId = courierClient.getCourierId(
+                        new CourierCredentials(
+                                courier.getLogin(),
+                                courier.getPassword()
+                        )
+                );
+
+                courierClient.delete(courierId);
+
+            } catch (Exception ignored) {
+            }
+        }
+    }
+
     @Test
     void courierCanLogin() {
 
-        Courier courier = CourierGenerator.getRandomCourier();
+        courier = CourierGenerator.getRandomCourier();
 
         courierClient.create(courier);
 
@@ -69,7 +91,7 @@ public class CourierLoginTest {
     @Test
     void loginWithWrongPasswordReturnsError() {
 
-        Courier courier = CourierGenerator.getRandomCourier();
+        courier = CourierGenerator.getRandomCourier();
 
         courierClient.create(courier);
 

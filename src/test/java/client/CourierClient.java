@@ -38,4 +38,12 @@ public class CourierClient {
         return given()
                 .delete(COURIER_PATH + "/" + id);
     }
+    @Step("Получить id курьера")
+    public int getCourierId(CourierCredentials credentials) {
+
+        return login(credentials)
+                .then()
+                .extract()
+                .path("id");
+    }
 }
