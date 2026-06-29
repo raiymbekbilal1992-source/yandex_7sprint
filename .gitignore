@@ -1,0 +1,15 @@
+# Maven
+target/
+src/target/
+
+# Allure
+allure-results/
+src/allure-results/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Compiled files
+*.class
